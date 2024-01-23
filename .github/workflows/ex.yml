@@ -1,0 +1,51 @@
+﻿name: Release version
+
+on:
+  push:
+    branches: [ ex/* ]
+
+env:
+  IMAGE_NAME: ${{ github.repository }}
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Login to Amazon ECR Public
+        uses: aws-actions/amazon-ecr-login@v2
+        with:
+          registry-type: public
+
+      - name: Build, tag, and push docker image to Amazon ECR
+        env:
+          REGISTRY: ${{ vars.AWS_REGISTRY }}
+          REPOSITORY: ai-dial-chat
+          IMAGE_TAG: latest
+        run: |
+          docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
+          docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+
+      - name: Update kube config
+        env:
+          EKS_CLUSTER_NAME: ${{ vars.EKS_CLUSTER_NAME }}
+          AWS_REGION: ${{ vars.AWS_REGION }}
+        run: aws eks update-kubeconfig --name $EKS_CLUSTER_NAME --region $AWS_REGION
+
+      - name: Deploy to EKS
+        env:
+          EKS_DEPLOYMENT: ${{ vars.EKS_DEPLOYMENT }}
+          EKS_NAMESPACE: ${{ vars.EKS_NAMESPACE }}
+        run: |
+          kubectl rollout restart $EKS_DEPLOYMENT -n $EKS_NAMESPACE

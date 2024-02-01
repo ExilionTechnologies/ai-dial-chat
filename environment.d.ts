@@ -69,6 +69,9 @@ declare global {
       AUTH_PING_ID_NAME?: string;
       AUTH_PING_ID_SECRET?: string;
       AUTH_PING_ID_SCOPE?: string;
+
+      NEXT_PUBLIC_OCCAMCHAT_API_HOST?: string;
+      NEXT_PUBLIC_OCCAMCHAT_ACCOUNT?: string;
     }
   }
 }

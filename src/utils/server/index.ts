@@ -96,17 +96,19 @@ export const OpenAIStream = async ({
     jobTitle,
   });
 
+  const occamMessages = messages.map((m) => m.custom_content?.attachments?.filter((f) => f.type == "occam").map((a) => a.data)).join("\n\n");
+  systemPrompt += "\n\n" + occamMessages;
   const body = JSON.stringify({
     messages:
       !systemPrompt || systemPrompt.trim().length === 0
         ? messages
         : [
-            {
-              role: Role.System,
-              content: systemPrompt,
-            },
-            ...messages,
-          ],
+          {
+            role: Role.System,
+            content: systemPrompt,
+          },
+          ...messages,
+        ],
     temperature,
     stream: true,
     model:

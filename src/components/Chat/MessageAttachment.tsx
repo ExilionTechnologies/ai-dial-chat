@@ -60,7 +60,7 @@ const AttachmentDataRenderer = ({
       </div>
     );
   }
-  if (attachment.type === 'text/plain') {
+  if (attachment.type === 'text/plain' || attachment.type === "occam") {
     return (
       <div className="max-w-full overflow-hidden">
         <span className="prose whitespace-pre-wrap text-sm">

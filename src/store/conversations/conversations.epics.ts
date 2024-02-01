@@ -474,9 +474,9 @@ const sendMessageEpic: AppEpic = (action$, state$) =>
       const updatedMessages: Message[] = (
         payload.deleteCount > 0
           ? payload.conversation.messages.slice(
-              0,
-              payload.deleteCount * -1 || undefined,
-            )
+            0,
+            payload.deleteCount * -1 || undefined,
+          )
           : payload.conversation.messages
       ).concat(userMessage, assistantMessage);
 
@@ -517,7 +517,7 @@ const sendMessageEpic: AppEpic = (action$, state$) =>
             () =>
               payload.conversation.selectedAddons.length > 0 &&
               modelsMap[payload.conversation.model.id]?.type !==
-                EntityType.Application,
+              EntityType.Application,
             of(
               AddonsActions.updateRecentAddons({
                 addonIds: payload.conversation.selectedAddons,
@@ -611,13 +611,14 @@ const streamMessageEpic: AppEpic = (action$, state$) =>
       const decoder = new TextDecoder();
       let eventData = '';
       let message = payload.message;
+      let b = chatBody.modelId === "exilion" ? { ...chatBody, modelId: "aws-bedrock" } : chatBody;
       return from(
         fetch('api/chat', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(chatBody),
+          body: JSON.stringify(b),
           signal: conversationSignal.signal,
         }),
       ).pipe(
@@ -782,16 +783,16 @@ const streamMessageFailEpic: AppEpic = (action$, state$) =>
         ),
         isReplay
           ? of(
-              ConversationsActions.updateConversation({
-                id: payload.conversation.id,
-                values: {
-                  replay: {
-                    ...payload.conversation.replay,
-                    isError: true,
-                  },
+            ConversationsActions.updateConversation({
+              id: payload.conversation.id,
+              values: {
+                replay: {
+                  ...payload.conversation.replay,
+                  isError: true,
                 },
-              }),
-            )
+              },
+            }),
+          )
           : EMPTY,
         of(
           ConversationsActions.updateConversation({
@@ -966,7 +967,7 @@ const replayConversationEpic: AppEpic = (action$, state$) =>
 
         const messages =
           conv.model.id !== model.id ||
-          isSettingsChanged(conv, newConversationSettings)
+            isSettingsChanged(conv, newConversationSettings)
             ? clearStateForMessages(conv.messages)
             : conv.messages;
 
@@ -988,11 +989,11 @@ const replayConversationEpic: AppEpic = (action$, state$) =>
             conversation: updatedConversation,
             deleteCount: payload.isRestart
               ? (conversation?.messages.length &&
-                  (conversation.messages[conversation.messages.length - 1]
-                    .role === Role.Assistant
-                    ? 2
-                    : 1)) ||
-                0
+                (conversation.messages[conversation.messages.length - 1]
+                  .role === Role.Assistant
+                  ? 2
+                  : 1)) ||
+              0
               : 0,
             activeReplayIndex: updatedConversation.replay.activeReplayIndex,
             message: activeMessage,

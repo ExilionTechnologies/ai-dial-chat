@@ -7,6 +7,7 @@ import { getSortedEntities } from '@/src/utils/server/get-sorted-entities';
 import { logger } from '@/src/utils/server/logger';
 
 import { authOptions } from './auth/[...nextauth]';
+import { EntityType } from '@/src/types/common';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getServerSession(req, res, authOptions);
@@ -23,7 +24,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       id: 'exilion',
       name: 'Exilion RAG',
       iconUrl: 'https://themes.epam-dev.exilion.com/gpt3.svg',
-      type: 'model',
+      type: EntityType.Model,
       maxLength: 24000,
       requestLimit: 6000,
       isDefault: true

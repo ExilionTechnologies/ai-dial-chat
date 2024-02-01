@@ -611,7 +611,7 @@ const streamMessageEpic: AppEpic = (action$, state$) =>
       const decoder = new TextDecoder();
       let eventData = '';
       let message = payload.message;
-      let b = chatBody.modelId === "exilion" ? { ...chatBody, modelId: "aws-bedrock" } : chatBody;
+      const b = chatBody.modelId === "exilion" ? { ...chatBody, modelId: "aws-bedrock" } : chatBody;
       return from(
         fetch('api/chat', {
           method: 'POST',

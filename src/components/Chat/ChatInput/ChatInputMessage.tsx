@@ -16,9 +16,8 @@ import { usePromptSelection } from '@/src/hooks/usePromptSelection';
 import { getUserCustomContent } from '@/src/utils/app/file';
 import { isMobile } from '@/src/utils/app/mobile';
 import { getPromptLimitDescription } from '@/src/utils/app/modals';
-import { getOccamCustomContent } from '@/src/utils/app/occam';
 
-import { Attachment, Message, Role } from '@/src/types/chat';
+import { Message, Role } from '@/src/types/chat';
 import { Feature } from '@/src/types/features';
 import { DialFile } from '@/src/types/files';
 import { OpenAIEntityModels, defaultModelLimits } from '@/src/types/openai';

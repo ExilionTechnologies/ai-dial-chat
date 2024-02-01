@@ -429,7 +429,7 @@ export const Chat = memo(() => {
 
   const onSendMessage = useCallback(
     async (message: Message) => {
-      let isExilionRag = selectedConversations.some((n)=>n.model?.id === 'exilion');
+      const isExilionRag = selectedConversations.some((n)=>n.model?.id === 'exilion');
 
       if (isExilionRag) {
         const occamCustomContent: any = await getOccamCustomContent(

@@ -16,7 +16,7 @@ export const getOccamCustomContent = async (promt: string) => {
 
     if (!response.ok) {
         const serverErrorMessage = await response.text();
-        console.log(`Occam documents fetch error: ${serverErrorMessage}. ${response.status}`);
+        console.error(`Occam documents fetch error: ${serverErrorMessage}. ${response.status}`);
         return undefined;
     }
 

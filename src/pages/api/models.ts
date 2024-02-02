@@ -20,16 +20,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   try {
     const entities = await getSortedEntities(token);
-    entities.push({
-      id: 'exilion',
-      name: 'Exilion RAG',
-      iconUrl: 'https://themes.epam-dev.exilion.com/gpt3.svg',
-      type: EntityType.Model,
-      maxLength: 24000,
-      requestLimit: 6000,
-      isDefault: true
-    });
-
     return res.status(200).json(entities);
   } catch (error) {
     logger.error(error);

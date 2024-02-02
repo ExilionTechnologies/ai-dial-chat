@@ -430,7 +430,7 @@ export const Chat = memo(() => {
   const onSendMessage = useCallback(
     async (message: Message) => {
       const isExilionRag = selectedConversations.some(
-        (n) => n.model?.id === 'exilion',
+        (n) => n.model?.id === 'exilion-rag',
       );
 
       if (isExilionRag) {

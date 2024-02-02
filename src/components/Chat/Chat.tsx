@@ -429,22 +429,30 @@ export const Chat = memo(() => {
 
   const onSendMessage = useCallback(
     async (message: Message) => {
-      const isExilionRag = selectedConversations.some((n)=>n.model?.id === 'exilion');
+      const isExilionRag = selectedConversations.some(
+        (n) => n.model?.id === 'exilion',
+      );
 
       if (isExilionRag) {
         const occamCustomContent: any = await getOccamCustomContent(
           message.content,
         );
-        if (message.custom_content == undefined) {
-          message.custom_content = {};
+        if (
+          occamCustomContent &&
+          occamCustomContent.custom_content &&
+          occamCustomContent.custom_content.attachments
+        ) {
+          if (message.custom_content == undefined) {
+            message.custom_content = {};
+          }
+          if (message.custom_content.attachments == undefined) {
+            message.custom_content.attachments = [];
+          }
+          message.custom_content.attachments =
+            message.custom_content.attachments.concat(
+              occamCustomContent.custom_content.attachments,
+            );
         }
-        if (message.custom_content.attachments == undefined) {
-          message.custom_content.attachments = [];
-        }
-        message.custom_content.attachments =
-          message.custom_content.attachments.concat(
-            occamCustomContent.custom_content.attachments,
-          );
       }
 
       dispatch(

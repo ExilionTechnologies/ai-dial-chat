@@ -7,7 +7,6 @@ import { getSortedEntities } from '@/src/utils/server/get-sorted-entities';
 import { logger } from '@/src/utils/server/logger';
 
 import { authOptions } from './auth/[...nextauth]';
-import { EntityType } from '@/src/types/common';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getServerSession(req, res, authOptions);

@@ -427,6 +427,9 @@ export const Chat = memo(() => {
     [dispatch],
   );
 
+  const occamHost = useAppSelector(SettingsSelectors.selectOccamApiHost);
+  const occamAccount = useAppSelector(SettingsSelectors.selectOccamAccount);
+
   const onSendMessage = useCallback(
     async (message: Message) => {
       const isExilionRag = selectedConversations.some(
@@ -436,6 +439,8 @@ export const Chat = memo(() => {
       if (isExilionRag) {
         const occamCustomContent: any = await getOccamCustomContent(
           message.content,
+          occamHost,
+          occamAccount
         );
         if (
           occamCustomContent &&

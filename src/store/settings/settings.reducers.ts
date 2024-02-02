@@ -20,6 +20,8 @@ export interface SettingsState {
   defaultRecentAddonsIds: string[];
   storageType: StorageType | string;
   themesHostDefined: boolean;
+  occamApiHost: string | null;
+  occamAccount: string | null;
 }
 
 const initialState: SettingsState = {
@@ -35,6 +37,8 @@ const initialState: SettingsState = {
   defaultRecentAddonsIds: [],
   storageType: 'browserStorage',
   themesHostDefined: false,
+  occamApiHost: null,
+  occamAccount: null
 };
 
 export const settingsSlice = createSlice({
@@ -189,6 +193,12 @@ const selectAnnouncement = createSelector([rootSelector], (state) => {
 const selectThemeHostDefined = createSelector([rootSelector], (state) => {
   return state.themesHostDefined;
 });
+const selectOccamApiHost = createSelector([rootSelector], (state) => {
+  return state.occamApiHost;
+});
+const selectOccamAccount = createSelector([rootSelector], (state) => {
+  return state.occamAccount;
+});
 
 export const SettingsActions = settingsSlice.actions;
 export const SettingsSelectors = {
@@ -207,4 +217,6 @@ export const SettingsSelectors = {
   selectStorageType,
   selectAnnouncement,
   selectThemeHostDefined,
+  selectOccamApiHost,
+  selectOccamAccount,
 };

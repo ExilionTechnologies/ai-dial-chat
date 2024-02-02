@@ -213,6 +213,8 @@ export const getServerSideProps: GetServerSideProps = async ({
     storageType: process.env.STORAGE_TYPE || 'browserStorage',
     announcement: process.env.ANNOUNCEMENT_HTML_MESSAGE || '',
     themesHostDefined: !!process.env.THEMES_CONFIG_HOST,
+    occamApiHost: process.env.NEXT_PUBLIC_OCCAMCHAT_API_HOST || null,
+    occamAccount: process.env.NEXT_PUBLIC_OCCAMCHAT_ACCOUNT || null
   };
 
   return {

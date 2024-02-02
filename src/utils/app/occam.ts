@@ -3,9 +3,7 @@ export interface OccamDocument {
     description: string;
 };
 
-export const getOccamCustomContent = async (promt: string) => {
-    const host = process.env.NEXT_PUBLIC_OCCAMCHAT_API_HOST;
-    const account = process.env.NEXT_PUBLIC_OCCAMCHAT_ACCOUNT;
+export const getOccamCustomContent = async (promt: string, host: string | null, account: string | null) => {
     if (host == null || host === "")
         return undefined;
     if (account == null || account === "")
